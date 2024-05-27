@@ -21,6 +21,7 @@
       "@/*": ["./*"],
       "@styles/*": ["./components/styles/*"],
       "@hooks/*": ["./components/hooks/*"],
+      "@graphics/*": ["./public/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

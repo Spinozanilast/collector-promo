@@ -3,28 +3,32 @@
 import "@styles/TopicItem.css";
 import { useHoverElementEffect } from "@hooks/useHoverImageEffects";
 import Image from "next/image";
+import staticImageSrc from "@graphics/revolver-cylinder/cylinder-static.png";
+import hoverGifSrc from "@graphics/revolver-cylinder/cylinder-rotation.gif";
 
 type TopicProps = {
   topicHeader: string;
   topicBreaflyText: string;
+  topicImageSrc: string | undefined;
 };
 
 const TopicItem = (props: TopicProps) => {
   const changingImageId = "header__image-hover";
   const hoverElementId = "topic";
-  const staticUri = "/revolver-cylinder/cylinder-static.png";
-  const hoverUri = "/revolver-cylinder/cylinder-rotation.gif";
 
-  useHoverElementEffect(staticUri, hoverUri, changingImageId, hoverElementId);
+  useHoverElementEffect(
+    staticImageSrc.src,
+    hoverGifSrc.src,
+    changingImageId,
+    hoverElementId
+  );
 
   return (
     <div id={hoverElementId}>
       <div id="topic__header">
         <Image
           id={changingImageId}
-          src={staticUri}
-          width={55}
-          height={55}
+          src={staticImageSrc}
           alt="rotated cylinder gif"
         />
         <div className="text_container">
@@ -37,9 +41,7 @@ const TopicItem = (props: TopicProps) => {
         <Image
           id="topic__image"
           alt="topic image"
-          src={staticUri}
-          width={100}
-          height={200}
+          src={props.topicImageSrc as string}
         />
         <div id="topic__main-text" className="centered-text text_container">
           <p id="topic__main_text">{props.topicBreaflyText}</p>

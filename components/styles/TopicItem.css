@@ -9,8 +9,8 @@
 }
 
 #topic {
+  position: relative;
   left: 40px;
-  position: absolute;
   width: 640px;
   height: 320px;
   display: flex;
@@ -21,6 +21,7 @@
 }
 
 #topic__header {
+  position: relative;
   padding: 10px;
   height: 85px;
   display: flex;
@@ -34,10 +35,6 @@
   font-family: "BlackCasper";
 }
 
-#header__image-hover {
-  width: auto;
-}
-
 #topic__main {
   display: flex;
   flex-direction: row;
@@ -46,6 +43,11 @@
 #topic__main_text {
   font-family: "Cheltenham";
   font-size: larger;
+}
+
+#header__image-hover {
+  width: fit-content;
+  height: auto;
 }
 
 #topic__image {
