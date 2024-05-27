@@ -16,21 +16,22 @@ const ThreeColtScene: React.FC<Props> = ({ position, zIndex }: Props) => {
   const initScene = async () => {
     if (!sceneRef.current) return;
 
-    const scene = new THREE.Scene();
-    const canvasElement = document.createElement("canvas") as HTMLCanvasElement;
+    const canvasDomElement = sceneRef.current.appendChild(
+      document.createElement("canvas")
+    ) as HTMLCanvasElement;
 
+    const scene = new THREE.Scene();
     const camera = createPerspectiveCamera({
       fov: 80,
       aspect: 2,
       near: 1,
       far: 100,
     });
-
     camera.position.set(0, 5, 10);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
-      canvas: canvasElement,
+      canvas: canvasDomElement,
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -45,31 +46,27 @@ const ThreeColtScene: React.FC<Props> = ({ position, zIndex }: Props) => {
       renderer.render(scene, camera);
     };
 
-    addEventListener("resize", () => {
-      const { width, height } = getCanvasComputedDimension(renderer.domElement);
+    const handleResize = () => {
+      const { width, height } = getWindowInnerDimension(renderer.domElement);
 
-      camera.updateProjectionMatrix();
       camera.aspect = width / height;
+      camera.updateProjectionMatrix();
 
       renderer.setSize(width, height);
-    });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    };
 
-    canvasElement.style.position = position;
-    canvasElement.style.zIndex = zIndex;
-    sceneRef.current?.appendChild(canvasElement);
+    window.addEventListener("resize", handleResize);
+
+    canvasDomElement.style.position = position;
+    canvasDomElement.style.zIndex = zIndex;
+
     animate();
   };
 
   useEffect(() => {
     initScene();
-    return () => {
-      if (sceneRef.current?.children[0]) {
-        sceneRef.current.removeChild(sceneRef.current.children[0]);
-      }
-    };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [position, zIndex]);
+  });
 
   return <div ref={sceneRef} />;
 };
@@ -133,12 +130,12 @@ async function loadHDRBackground(
     });
 }
 
-function getCanvasComputedDimension(canvas: HTMLCanvasElement): {
+function getWindowInnerDimension(canvas: HTMLCanvasElement): {
   width: number;
   height: number;
 } {
-  const width = parseInt(window.getComputedStyle(canvas).width);
-  const height = parseInt(window.getComputedStyle(canvas).height);
+  const width = window.innerWidth;
+  const height = window.innerHeight;
   return { width, height };
 }
 
