@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect } from "react";
 
 const useHoverImageEffect = (
@@ -18,7 +16,8 @@ const useHoverImageEffect = (
     imageElement.onmouseleave = () => {
       imageElement.src = staticUri;
     };
-  }, [staticUri, hoverUri, domElementId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [staticUri, hoverUri]);
 };
 
 const useHoverElementEffect = (
@@ -40,7 +39,8 @@ const useHoverElementEffect = (
     hoverElement.onmouseleave = () => {
       imageElement.src = staticUri;
     };
-  }, [staticUri, hoverUri, changingElementId, hoverElementId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hoverUri, staticUri]);
 };
 
 export { useHoverElementEffect, useHoverImageEffect };

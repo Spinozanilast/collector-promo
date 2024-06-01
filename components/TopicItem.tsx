@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import "@styles/TopicItem.css";
@@ -26,9 +27,9 @@ const TopicItem = (props: TopicProps) => {
   return (
     <div id={hoverElementId}>
       <div id="topic__header">
-        <Image
+        <img
           id={changingImageId}
-          src={staticImageSrc}
+          src={staticImageSrc.src}
           alt="rotated cylinder gif"
         />
         <div className="text_container">
